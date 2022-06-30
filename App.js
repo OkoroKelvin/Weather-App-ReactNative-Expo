@@ -5,9 +5,11 @@ import * as Location from 'expo-location';
 
 
 const WEATHER_API_KEY = '3158462e7cfcce1c75a06e159d5d6636'
+const BASE_WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather?'
 
 export default function App() {
   const [errorMessage, setErrorMessage] = useState(null)
+  const [currentWeather, setCurrentWeather] = useState(null)
 
 
   useEffect(() =>{
@@ -24,15 +26,24 @@ export default function App() {
     }
     const location = await Location.getCurrentPositionAsync();
     const {latitude, longitude} = location.coords
-    alert(`Latitude : ${latitude}, Longitude: ${longitude}`);
 
-    } catch (error){
+    const weatherUrl =`${BASE_WEATHER_URL}lat=${latitude}&lon=${longitude}&appid=${WEATHER_API_KEY}`
 
+    const response = await fetch(weatherUrl)
+    const result = await response.json()
 
-  }
+    if(response.ok){
+      setCurrentWeather(result)
+    }else{
+      setCurrentWeather(result.message)
+    }
+
+    } catch (error){}
 }
 
-
+if(currentWeather){
+  
+}
 
   return (
     <View style={styles.container}>
