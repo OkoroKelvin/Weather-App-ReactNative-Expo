@@ -1,14 +1,47 @@
 import { StatusBar } from 'expo-status-bar';
+import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import * as Location from 'expo-location';
+
+
+const WEATHER_API_KEY = '3158462e7cfcce1c75a06e159d5d6636'
 
 export default function App() {
+  const [errorMessage, setErrorMessage] = useState(null)
+
+
+  useEffect(() =>{
+  load()
+  },[])
+
+
+  async function load(){
+  try{
+    let{status}= await Location.requestPermissionsAsync()
+    if(status !=='granted'){
+      setErrorMessage('Access to location is needed to run the app');
+      return 
+    }
+    const location = await Location.getCurrentPositionAsync();
+    const {latitude, longitude} = location.coords
+    alert(`Latitude : ${latitude}, Longitude: ${longitude}`);
+
+    } catch (error){
+
+
+  }
+}
+
+
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>Hello from React Natives</Text>
       <StatusBar style="auto" />
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
