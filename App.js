@@ -49,13 +49,11 @@ export default function App() {
 }
 
 if(currentWeather){
-  // const {main : {temp}} = currentWeather
-
   return (
     <View style={styles.container}>
         <StatusBar style="auto" />  
         <View style={styles.main}>
-          <UnitsPicker/>
+          <UnitsPicker unitsSystem={unitsSystem} setUnitsSystem={setUnitSystem}/>
           <WeatherInfo currentWeather={currentWeather}/>
       </View>
     </View>
